@@ -12,20 +12,18 @@ import torch.nn.functional as F
 from dash import Input, Output, State, dcc, html
 from dash.exceptions import PreventUpdate
 from PIL import Image
-from utils import get_image_thumbnail, scan_image_files
-
+from utils.image_utils import get_image_thumbnail, scan_image_files
 import clip
 
 DAYNIGHT_CKPT = (
     r"D:\code\My_Dash\dashboard_v1.0.1\weight\best_openclip_scene_classifier.pt"
 )
 
-
 def load_daynight_clip_classifier(path):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     ckpt = torch.load(path, map_location=device)
 
-    # 1️⃣ 모델명 매핑
+    # 모델명 매핑
     MODEL_NAME_MAP = {
         "ViT-L-14": "ViT-L/14",
         "ViT-L-14@336px": "ViT-L/14@336px",
@@ -39,11 +37,11 @@ def load_daynight_clip_classifier(path):
 
     model_name = MODEL_NAME_MAP[raw_name]
 
-    # 2️⃣ CLIP pretrained 로드 (🔥 state_dict 로드 안 함)
+    # CLIP pretrained 로드 (🔥 state_dict 로드 안 함)
     model, preprocess = clip.load(model_name, device=device)
     model.eval()
 
-    # 3️⃣ ckpt에서 필요한 정보만 사용
+    # ckpt에서 필요한 정보만 사용
     class_to_idx = ckpt["class_to_idx"]
     class_prompts = ckpt["class_prompts"]
 
@@ -129,17 +127,12 @@ def register_daynight_callbacks(app):
         fig.add_vrect(x0=-0.05, x1=0.05, fillcolor="gray", opacity=0.15, layer="below")
 
         fig.update_layout(
-            # title={
-            #     "text": "Day / Night CLIP Similarity (confidence view)",
-            #     "x": 0.5,
-            #     "xanchor": "center"
-            # },
             title=None,
             xaxis_title="Confidence (day − night cosine similarity)",
             yaxis_title="Similarity strength",
             dragmode="select",
             clickmode="event+select",
-            # 🔑 핵심
+            # 핵심
             margin=dict(l=40, r=20, t=50, b=40),
             legend=dict(
                 orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1
@@ -167,13 +160,13 @@ def register_daynight_callbacks(app):
 
         filenames = []
 
-        # ✅ 1순위: 다중 선택 (박스 / 라쏘)
+        # 1순위: 다중 선택 (박스 / 라쏘)
         if selectedData and selectedData.get("points"):
             filenames = [
                 p["customdata"][0] for p in selectedData["points"] if "customdata" in p
             ]
 
-        # ✅ 2순위: 단일 클릭
+        # 2순위: 단일 클릭
         elif clickData and clickData.get("points"):
             filenames = [clickData["points"][0]["customdata"][0]]
 
@@ -240,7 +233,7 @@ def register_daynight_callbacks(app):
         if not img_folder:
             raise PreventUpdate
 
-        # 🔹 zip 파일 메모리 생성
+        # zip 파일 메모리 생성
         zip_buffer = io.BytesIO()
 
         with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zf:

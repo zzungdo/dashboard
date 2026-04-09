@@ -4,13 +4,13 @@ import dash
 from callbacks.logger import send_tab_log
 from dash import ctx, html
 from dash.exceptions import PreventUpdate
-from tab_home import home_tab_layout
-from tab_image import image_tab_layout
-from tab_inspection import (gt_duplicate_tab_layout,
+from tabs.home import home_tab_layout
+from tabs.image import image_tab_layout
+from tabs.inspection import (gt_duplicate_tab_layout,
                             image_exact_duplicate_tab_layout,
                             image_feature_tab_layout)
-from tab_statistics import statistics_tab_layout
-from tab_visual import visual_tab_layout
+from tabs.statistics import statistics_tab_layout
+from tabs.visual import visual_tab_layout
 
 
 def register_navigation_callbacks(app):

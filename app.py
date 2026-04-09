@@ -73,7 +73,6 @@ def parse_user_agent(ua: str):
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 
-
 def get_log_path():
     today = datetime.now()
     folder = os.path.join(LOG_DIR, today.strftime("%Y-%m"))
@@ -190,4 +189,4 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
     # app.run(host="0.0.0.0", port=8080, debug=False)
 
-    # 127.0.0.1:port 로 웹에서 들어가면됨
+    # ! 127.0.0.1:port 로 웹에서 들어가면됨 

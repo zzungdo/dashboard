@@ -7,7 +7,7 @@ def home_tab_layout(current_paths=None, reset_mode=False):
     gt_value = current_paths.get('gt') if current_paths else ""
     img_value = current_paths.get('img') if current_paths else ""
 
-    # ✅ 이미 경로 설정되어 있고, 아직 재설정 모드 아님 → “재설정하시겠습니까?” 안내
+    # 이미 경로 설정되어 있고, 아직 재설정 모드 아님 → “재설정하시겠습니까?” 안내
     #if gt_value and img_value and not reset_mode:
     if img_value and not reset_mode:
         return html.Div([
@@ -41,7 +41,7 @@ def home_tab_layout(current_paths=None, reset_mode=False):
             })
         ])
 
-    # ✅ 재설정 모드이거나 처음 실행일 때 — 입력창 표시
+    # 재설정 모드이거나 처음 실행일 때 — 입력창 표시
     return html.Div([
         html.H2("데이터 경로 설정", style={'textAlign': 'center', 'marginTop': '40px'}),
         html.P("아래에 GT와 IMAGE 폴더 경로를 입력한 뒤 RUN을 눌러주세요.",

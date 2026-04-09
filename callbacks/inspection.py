@@ -5,8 +5,8 @@ import os
 import pandas as pd
 from dash import Input, Output, State, dcc, no_update
 from dash.exceptions import PreventUpdate
-from utils import compare_images_md5, dict_to_df, validate_paths
-
+from utils.hash_utils import compare_images_md5
+from utils.common import dict_to_df, validate_paths
 
 def register_inspection_callbacks(app):
 
@@ -27,7 +27,7 @@ def register_inspection_callbacks(app):
 
         results = compare_images_md5(img_path)
 
-        # ✅ 중복 이미지가 없을 때
+        # 중복 이미지가 없을 때
         if not results:
             return [
                 {"index": "-", "image_a": "-", "image_b": "-", "note": "완전 중복 이미지 없음"}
@@ -142,7 +142,7 @@ def register_inspection_callbacks(app):
         # *결과 DataFrame 생성
         df_res = pd.DataFrame(rows).reset_index(drop=True)
 
-        # ✅ 중복이 하나도 없을 때
+        # 중복이 하나도 없을 때
         if df_res.empty:
             return [
                 {

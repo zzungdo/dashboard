@@ -3,9 +3,9 @@ import os
 import dash
 import pandas as pd
 from dash import Input, Output, State, html
-from dash.exceptions import PreventUpdate
-from tab_home import home_tab_layout
-from utils import load_all_gt, scan_image_files
+from tabs.home import home_tab_layout
+from utils.gt_utils import load_all_gt
+from utils.image_utils import scan_image_files
 
 
 def register_home_callbacks(app):
@@ -25,7 +25,7 @@ def register_home_callbacks(app):
     def on_run_click(n_clicks, gt_path, img_path):
 
         # =========================
-        # 1️⃣ IMAGE 경로 필수 체크
+        # IMAGE 경로 필수 체크
         # =========================
         if not img_path:
             warn = html.Div(
@@ -53,7 +53,7 @@ def register_home_callbacks(app):
             )
 
         # =========================
-        # 2️⃣ IMAGE 파일 스캔 (항상)
+        # IMAGE 파일 스캔 (항상)
         # =========================
         image_files = scan_image_files(img_path)
         image_names = [os.path.basename(p) for p in image_files]
@@ -71,7 +71,7 @@ def register_home_callbacks(app):
             )
 
         # =========================
-        # 3️⃣ GT는 선택 사항
+        # 3️GT는 선택 사항
         # =========================
         df_all = None
         gt_files = []
@@ -106,12 +106,12 @@ def register_home_callbacks(app):
                 df_all = None
 
         # =========================
-        # 4️⃣ store-paths 구성
+        # 4️store-paths 구성
         # =========================
         paths = {"img": img_path, "gt": gt_path}  # if df_all is not None else None
 
         # =========================
-        # 5️⃣ 안내 메시지
+        # 5️안내 메시지
         # =========================
         msg_children = [
             html.H3("경로 설정 완료", style={"textAlign": "center", "color": "green"}),
@@ -137,7 +137,7 @@ def register_home_callbacks(app):
         msg = html.Div(msg_children)
 
         # =========================
-        # 6️⃣ 반환
+        # 6️반환
         # =========================
         return (
             paths,
@@ -161,6 +161,6 @@ def register_home_callbacks(app):
         empty_paths = {}
 
         return (
-            home_tab_layout(empty_paths, reset_mode=True),  # 1️⃣ main-content
-            empty_paths,  # 2️⃣ store-paths
+            home_tab_layout(empty_paths, reset_mode=True),  # main-content
+            empty_paths,  # store-paths
         )

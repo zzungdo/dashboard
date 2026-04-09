@@ -5,16 +5,8 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from dash import ALL, Input, Output, State, ctx, html
-from dash.exceptions import PreventUpdate
-from utils import (
-    dict_to_df,
-    draw_boxes,
-    empty_figure,
-    get_image_thumbnail,
-    imread_unicode,
-    validate_paths,
-)
-
+from utils.common import dict_to_df, empty_figure, validate_paths
+from utils.image_utils import draw_boxes, get_image_thumbnail, imread_unicode
 
 def register_visual_callbacks(app):
     # !산점도 콜백

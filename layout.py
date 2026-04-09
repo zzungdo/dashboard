@@ -1,11 +1,6 @@
 # layout.py
 from dash import dcc, html
-from tab_home import home_tab_layout
-from tab_image import image_tab_layout
-from tab_inspection import inspection_tab_layout
-from tab_statistics import statistics_tab_layout
-from tab_visual import visual_tab_layout
-
+from tabs.home import home_tab_layout
 
 def create_layout():
     return html.Div(

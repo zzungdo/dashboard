@@ -119,7 +119,7 @@ def statistics_tab_layout():
                 data=[],
                 page_size=10,
                 sort_action="native",
-                row_selectable="single",
+                #row_selectable="single",
                 style_table={"width": "100%", "margin": "0 auto"},
                 style_cell={"textAlign": "center"},
                 style_header={"fontWeight": "bold"},

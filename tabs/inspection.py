@@ -87,7 +87,7 @@ def gt_duplicate_tab_layout():
                     data=[],
                     page_size=7,
                     page_current=0,
-                    row_selectable="single",
+                    #row_selectable="single",
                     style_cell={"textAlign": "center"},
                     style_header={"fontWeight": "bold"},
                     style_table={"overflowX": "auto", "width": "100%"},
@@ -120,11 +120,13 @@ def gt_duplicate_tab_layout():
                 "선택된 이미지 미리보기", style={"textAlign": "center", "marginBottom": "15px"}
             ),
             Loading(
-                id="loading-image-preview",
+                #id="loading-image-preview",
+                id="loading-duplicate-image-preview",
                 type="cube",
                 children=html.Div(
                     dcc.Graph(
-                        id="image-preview",
+                        #id="image-preview",
+                        id="duplicate-image-preview",
                         figure={},
                         config={
                             "displayModeBar": True,
@@ -172,7 +174,7 @@ def image_exact_duplicate_tab_layout():
                     ],
                     data=[],
                     page_size=7,
-                    row_selectable="single",
+                    #row_selectable="single",
                     style_table={"overflowX": "auto", "width": "100%"},
                     style_cell={"textAlign": "center", "whiteSpace": "nowrap"},
                     style_header={"fontWeight": "bold"},
@@ -237,12 +239,12 @@ def image_feature_tab_layout():
                 n_clicks=0,
                 style={"marginBottom": "10px"},
             ),
-            # ✅ 공통 타이틀 (여기서 기준선 통일)
+            # 공통 타이틀 (여기서 기준선 통일)
             html.H5(
                 "Day / Night CLIP Similarity (confidence view)",
                 style={"marginBottom": "8px"},
             ),
-            # ✅ 좌/우 레이아웃 (이 Div 하나만!)
+            # 좌/우 레이아웃 (이 Div 하나만!)
             html.Div(
                 [
                     # 왼쪽: 산점도
@@ -267,7 +269,7 @@ def image_feature_tab_layout():
                             html.Div(
                                 id="daynight-full-image",
                                 style={
-                                    "flex": "3",  # ✅ 메인 이미지
+                                    "flex": "3",  # 메인 이미지
                                     "display": "flex",
                                     "alignItems": "center",
                                     "justifyContent": "center",
@@ -276,7 +278,7 @@ def image_feature_tab_layout():
                             html.Div(
                                 id="daynight-thumbnails",
                                 style={
-                                    "flex": "1",  # ✅ 썸네일
+                                    "flex": "1",  # 썸네일
                                     "display": "flex",
                                     "flexWrap": "wrap",
                                     "gap": "6px",

@@ -1,6 +1,5 @@
 #tab_visual.py
 
-
 from dash import html, dcc
 from dash.dcc import Loading
 
@@ -66,7 +65,7 @@ def visual_tab_layout(default_subtab='subtab-scatter'):
                             )
                         ),
                     ],
-                    # ✅ 여기서 가로 배치 스타일 지정
+                    # 여기서 가로 배치 스타일 지정
                     style={
                         'display': 'flex',
                         'flexDirection': 'row',       # 가로 배치
@@ -108,7 +107,7 @@ def visual_tab_layout(default_subtab='subtab-scatter'):
                                 children=dcc.Graph(
                                     id='heatmap',
                                     figure={},
-                                    style={'height': '75vh', 'width': '40vw', 'marginRight': '20px'}   # ✅ 동일한 크기 적용
+                                    style={'height': '75vh', 'width': '40vw', 'marginRight': '20px'}   # 동일한 크기 적용
                                 )
                             ),
                             html.Hr(style={'margin': '10px 0'}),
@@ -140,13 +139,13 @@ def visual_tab_layout(default_subtab='subtab-scatter'):
                                         config={
                                         'displayModeBar': True,
                                         'scrollZoom': True,
-                                        'doubleClick': False,   # ✅ 더블클릭 → 원본으로 복귀
+                                        'doubleClick': False,   # 더블클릭 → 원본으로 복귀
                                         'displayModeBar' : False,
                                         'displaylogo': False
                                     },
                                     style={
-                                        'height': '80vh',          # ✅ 동일한 높이
-                                        'width': '40vw',           # ✅ 동일한 폭
+                                        'height': '80vh',          # 동일한 높이
+                                        'width': '40vw',           # 동일한 폭
                                         'display': 'flex',
                                         'justifyContent': 'center',
                                         'alignItems': 'center'
