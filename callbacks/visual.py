@@ -14,8 +14,10 @@ def register_visual_callbacks(app):
         Output("center-scatter", "figure"),
         Input("store-paths", "data"),
         Input("store-df-all", "data"),
+        Input("scatter-width-range", "value"),
+        Input("scatter-height-range", "value"),
     )
-    def update_center_scatter(store, df_all_dict):
+    def update_center_scatter(store, df_all_dict, width_range, height_range):
 
         gt_folder, img_folder = validate_paths(store)
         if gt_folder is None or img_folder is None:
@@ -26,8 +28,13 @@ def register_visual_callbacks(app):
             return px.scatter(title="데이터 없음")
 
         # RangeSlider 안전 처리
-        width_range = [0, df_all["bbox_width"].max()]
-        height_range = [0, df_all["bbox_height"].max()]
+        # width_range = [0, df_all["bbox_width"].max()]
+        # height_range = [0, df_all["bbox_height"].max()]
+
+        if not width_range:
+            width_range = [0, float(df_all["bbox_width"].max())]
+        if not height_range:
+            height_range = [0, float(df_all["bbox_height"].max())]
 
         min_w, max_w = width_range
         min_h, max_h = height_range
