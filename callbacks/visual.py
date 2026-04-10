@@ -62,12 +62,12 @@ def register_visual_callbacks(app):
             custom_data=["filename"],  # 반드시 추가해야 clickData에서 filename 접근 가능
             title=f"BBox Width vs Height 산점도 (W={width_range}, H={height_range})",
         )
-        fig.update_traces(marker=dict(size=8), selector=dict(mode="markers"))
+        fig.update_traces(marker=dict(size=5), selector=dict(mode="markers"))
         fig.update_layout(margin=dict(l=20, r=20, t=50, b=20), height=600)
 
         return fig
 
-    # === 산점도 포인트 클릭 → 하단 패널에 바운딩박스 포함 이미지 표시 ===
+    # === 산점도 포인트 클릭 → 좌측 패널에 바운딩박스 포함 이미지 표시 ===
     @app.callback(
         Output("scatter-preview", "figure"),
         Input("center-scatter", "clickData"),
@@ -76,7 +76,7 @@ def register_visual_callbacks(app):
         prevent_initial_call=True,
     )
     def show_scatter_preview(clickData, store_paths, df_all_dict):
-        """산점도 포인트 클릭 시 하단 패널에 선택된 클래스의 바운딩박스를 포함한 이미지 표시"""
+        """산점도 포인트 클릭 시 좌측 패널에 선택된 클래스의 바운딩박스를 포함한 이미지 표시"""
         if not clickData or not store_paths or not df_all_dict:
             raise dash.exceptions.PreventUpdate
 
@@ -141,7 +141,8 @@ def register_visual_callbacks(app):
 
         # === 확대 가능하게 설정 ===
         fig.update_layout(
-            title=f"{fn} - 클래스: {selected_class}",
+            title=f"{fn}<br>클래스: {selected_class}",
+            font=dict(size=9),
             xaxis=dict(
                 visible=False,
                 range=[0, img_w],

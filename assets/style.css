@@ -111,7 +111,7 @@ body {
 .main-container {
     margin-left: 250px;
     transition: margin-left 0.3s ease-in-out;
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
     min-height: 100vh;
     overflow-x: auto;
@@ -124,7 +124,8 @@ body {
 
 /* === 메인 콘텐츠 === */
 .content {
-    padding: 20px;
+
+    padding: 0 20px 20px 20px;
     background-color: transparent;
     min-width: calc(100% - 250px);
     box-sizing: border-box;

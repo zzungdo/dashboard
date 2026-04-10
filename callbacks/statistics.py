@@ -64,7 +64,6 @@ def register_statistics_callbacks(app):
 
     # ! 통계 요약 탭 파이차트 콜백
     @app.callback(
-        Output("image-count-display", "children"),
         Output("resolution-pie", "figure"),
         Input("store-paths", "data"),
         Input("store-df-all", "data"),  # ← 인터페이스 유지 (의존은 안 함)
@@ -74,12 +73,12 @@ def register_statistics_callbacks(app):
         # 경로 검증
         gt_folder, img_folder = validate_paths(store)
         if img_folder is None:
-            return "총 이미지 수: 0 장", px.scatter(title="해상도 데이터 없음")
+            return px.scatter(title="해상도 데이터 없음")
 
         # 이미지 파일 목록
         image_files = scan_image_files(img_folder)
         if not image_files:
-            return "총 이미지 수: 0 장", px.scatter(title="해상도 데이터 없음")
+            return  px.scatter(title="해상도 데이터 없음")
 
         # 이미지 수
         n_images = len(image_files)
@@ -96,7 +95,7 @@ def register_statistics_callbacks(app):
                 continue
 
         if not reso_counter:
-            return f"총 이미지 수: {n_images} 장", px.scatter(title="해상도 데이터 없음")
+            return  px.scatter(title="해상도 데이터 없음")
 
         # DataFrame 변환
         reso_count = pd.DataFrame(
@@ -104,7 +103,7 @@ def register_statistics_callbacks(app):
         ).sort_values("count", ascending=False)
 
         # === 파이차트 생성 ===
-        fig = px.pie(reso_count, names="resolution", values="count", title="이미지 해상도 분포")
+        fig = px.pie(reso_count, names="resolution", values="count", title=f"이미지 해상도 분포 (총 이미지 수: {n_images}장)")
 
         fig.update_traces(
             pull=0.01,
@@ -114,12 +113,11 @@ def register_statistics_callbacks(app):
         )
 
         fig.update_layout(
-            height=450,
             margin=dict(t=100, b=40, l=40, r=40),
             legend=dict(orientation="h", y=-0.25, x=0.5, xanchor="center"),
         )
 
-        return f"총 이미지 수: {n_images} 장", fig
+        return fig
 
     # ! GT / IMAGE 정합성 파이차트
     @app.callback(
@@ -195,5 +193,5 @@ def register_statistics_callbacks(app):
             ),
         )
 
-        fig.update_layout(height=380)
+        #fig.update_layout(height=450)
         return fig

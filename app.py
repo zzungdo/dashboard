@@ -101,7 +101,7 @@ app = Dash(__name__, suppress_callback_exceptions=True)
 
 server = app.server
 app.layout = create_layout()
-app.title = "Dashboard_v1.0.1"
+app.title = "Dashboard_v1.2.1"
 register_callbacks(app)
 
 
