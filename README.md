@@ -92,3 +92,9 @@ dashboard_v1.0.0
  ┣ requirements.txt
  ┗ utils.py
  ```
+
+ ## Preview
+
+<p align="center">
+  <img src="images/dashboard_main.png" alt="Dashboard Main" width="900">
+</p>
