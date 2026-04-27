@@ -1,36 +1,51 @@
 # Bounding Box 분석 및 시각화 대시보드
 
-Python 기반 Dash 웹 앱으로, 바운딩박스(GT 파일) 데이터를 시각화하고  
-중복 여부, 클래스 분포, 위치 통계 등을 확인할 수 있는 도구입니다.
+Python 기반 Dash 웹 애플리케이션으로, Bounding Box(GT) 데이터를 시각적으로 분석하고  
+중복 여부, 클래스 분포, 위치 통계, 이미지별 정보를 한눈에 확인할 수 있는 대시보드입니다.
+
+라벨링 결과를 빠르게 검수하거나, 데이터셋의 전체 분포와 품질을 점검하는 용도로 사용할 수 있습니다.
+
+## 📸 Dashboard Overview
+
+- 좌측: 기능 메뉴 (분석 / 통계 / 이미지 / 검수)
+- 중앙: 데이터 입력 및 실행
+- 각 탭별 시각화 제공
+
+<p align="center">
+  <img src="images/dashboard_main.png" alt="Dashboard Main" width="900">
+</p>
 
 ---
+## 실행 방법
 
-## 실행 순서 요약
+1. 저장소 클론
+  ```
+  git clone <REPOSITORY_URL>
+  cd dashboard_v1.2.0
+  ```
 
-압축을 풀고, 아래 순서대로 실행하면 됩니다:
+2. 가상환경 생성 및 활성화
+  ```
+  conda create -n dashboard_env python=3.9 -y
+  conda activate dashboard_env
+  ```
 
-1. Python 3.9 가상환경 만들기:
-   ```bash
-   conda create -n dashboard_env python=3.9 -y && conda activate dashboard_env
-   ```
+3. 패키지 설치:
+  ```
+  pip install -r requirements.txt
+  ```
 
-2. 패키지 설치:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. 앱 실행:
-   ```bash
-   python app.py
-   ```
+4. 앱 실행:
+  ```
+  python app.py
+  ```
 
 ---
 
 ## 데이터셋 경로 설정
 
-- `utils.py` 상단에서 GT 및 이미지 경로를 직접 지정합니다.
-- NAS 또는 공유 폴더 사용 시, 반드시 해당 경로를 **Windows 탐색기에서 로컬 드라이브(Z:\\ 등)** 으로 마운트해서 사용해주세요.  
-  (UNC 경로 `\\192.168...` 형태는 오류가 발생할 수 있습니다.)
+- 네트워크 드라이브 환경에서는 UNC 경로(\\192.168...)보다
+Windows에 마운트된 로컬 드라이브 경로(Z:\...) 사용을 권장
 
 ---
 
@@ -43,21 +58,24 @@ Python 기반 Dash 웹 앱으로, 바운딩박스(GT 파일) 데이터를 시각
 
 ---
 
-## 사용 방법
+## 주요 기능
 
-- 탭별 주요 기능:
-  - **산점도**: Bounding Box의 Width,Height를 기준으로 시각화  
-  - **히트맵**: 그리드 기반 밀도 시각화  
-  - **클래스 분포 / 통계**: 전체 클래스 비율 및 개수 시각화  
-  - **이미지 요약 / 확인**: Image 내 정보 요약 및 Viewing  
-  - **데이터 검사**: 클래스/좌표 기준 중복 바운딩박스 탐지
+- **Bounding Box 시각화**
+  - Width / Height 기준 scatter plot 시각화
+  - bbox 중심 좌표 기반 heatmap 생성
+  - 특정 영역 bbox 집중도 분석
 
-- Image Viewer
-  - **Zoom In** : 마우스 좌클릭 → 드래그하여 사각형 형태로 확대 (box zoom)  
-  - **Zoom Out**: 더블클릭 → 원래 크기로 복귀  
-  - **툴바** :  Zoom, Pan 등 설정  
-    - 마우스 휠 줌은 **비활성화됨** (좌우 잘림 방지 목적)  
-  - 산점도, 히트맵, 테이블 클릭 시 하단 이미지 자동 전환
+- **통계 분석**
+  - 클래스별 개수 및 비율 확인
+  - 데이터 분포 및 주요 통계 확인
+
+- **이미지 확인**
+  - 선택한 데이터에 해당하는 이미지 미리보기
+  - 산점도, 히트맵, 테이블 클릭 시 연관 이미지 자동 전환
+
+- **데이터 검수**
+  - 클래스/좌표 기준 중복 Bounding Box 탐지
+  - 이미지 단위 데이터 확인 지원
 
 ---
 
@@ -75,26 +93,46 @@ pip install -r requirements.txt
 ## 개발 환경 정보
 
 - Python: 3.13.2 (Anaconda)  
-- 가상환경: `dashboard_env`  
 - OS: Windows 10 64bit
 
 > 본 프로젝트는 Python 3.13.2에서 개발되었으며, 최신 Python 환경에서 동작합니다.  
 > 단, 일부 PC에서는 Python 3.9 또는 3.10 버전이 더 안정적으로 작동할 수 있으므로 해당 버전 사용도 가능합니다.
 
 ---
-## Tree 구조
+
+## 프로젝트 구조
+
+```text
+dashboard_v1.2.0/
+├─ app.py
+├─ layout.py
+├─ assets/
+│  ├─ custom.js
+│  └─ style.css
+├─ callbacks/
+│  ├─ __init__.py
+│  ├─ core.py
+│  ├─ daynight.py
+│  ├─ home.py
+│  ├─ image.py
+│  ├─ inspection.py
+│  ├─ logger.py
+│  ├─ navigation.py
+│  └─ visual.py
+├─ tabs/
+│  ├─ home.py
+│  ├─ image.py
+│  ├─ inspection.py
+│  ├─ statistics.py
+│  └─ visual.py
+├─ utils/
+│  ├─ common.py
+│  ├─ gt_utils.py
+│  ├─ hash_utils.py
+│  └─ image_utils.py
+└─ README.md
 ```
-dashboard_v1.0.0
- ┣ app.py
- ┣ callbacks.py
- ┣ layout.py
- ┣ README.md
- ┣ requirements.txt
- ┗ utils.py
- ```
-
- ## Preview
-
-<p align="center">
-  <img src="images/dashboard_main.png" alt="Dashboard Main" width="900">
-</p>
+## ⚙️ Implementation Details
+- Dash callback 기반 상태 관리 및 인터랙션 처리
+- Plotly를 활용한 interactive visualization (scatter, heatmap)
+- 대용량 GT 데이터 처리 최적화- 모듈화 구조 (tabs / callbacks / utils 분리)
